@@ -1,5 +1,5 @@
 import numpy as np
-# import pandas as pd
+import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.datasets import fetch_california_housing
@@ -15,6 +15,9 @@ from statsmodels.formula.api import ols
 
 from sklearn.feature_selection import RFE
 
+
+
+
 def ols_model_eval(X, y):
 
     ols_model = LinearRegression()
@@ -23,11 +26,8 @@ def ols_model_eval(X, y):
 
     # Calculate predictions
     y_pred_ols = ols_model.predict(X)
-
-    mse_ols = np.mean((y - y_pred_ols)**2)
-    print(f'Mean Squared Error of OLS: {mse_ols}')
     
-    return y_pred_ols, mse_ols
+    return y_pred_ols
 
 def ridge_model_eval(X, y):
     # Perform Ridge Regression
@@ -68,20 +68,20 @@ def cal_cp(X, y, y_pred):
     return Cp
 
 
-# def calculate_vif(X):
-#     """
-#     Calculate the Variance Inflation Factor (VIF) for each feature in X.
+def calculate_vif(X):
+    """
+    Calculate the Variance Inflation Factor (VIF) for each feature in X.
     
-#     Parameters:
-#     - X: DataFrame containing the independent variables (features).
+    Parameters:
+    - X: DataFrame containing the independent variables (features).
     
-#     Returns:
-#     - vif: Series containing the VIF for each feature.
-#     """
-#     vif_data = pd.DataFrame()
-#     vif_data["feature"] = X.columns
-#     vif_data["VIF"] = [variance_inflation_factor(X.values, i) for i in range(len(X.columns))]
-#     return vif_data
+    Returns:
+    - vif: Series containing the VIF for each feature.
+    """
+    vif_data = pd.DataFrame()
+    vif_data["feature"] = X.columns
+    vif_data["VIF"] = [variance_inflation_factor(X.values, i) for i in range(len(X.columns))]
+    return vif_data
 
 
 def forward_selection(X, y):
@@ -170,47 +170,18 @@ eatures).
     return selected_features
 
 
-def generate_combinations(letters):
-    all_combinations = []
-    for i in range(1, len(letters) + 1):
-        combinations = itertools.combinations(letters, i)
-        for combination in combinations:
-            all_combinations.append(''.join(combination))
-    return all_combinations
-
-
-def var_combo_result(X, y):
-    string = ''
-    for i in range(X.shape[1]):
-        string += str(i + 1)
-
-    print(string)
-
-    var_combination = generate_combinations(string)
-
-    res_table = dict()
-    for item in var_combination:
-        for i in item:
-            pass
-
-
-    Xs = []
-
-
-    for i in range(X.shape[1]):
-        Xs.append(X[:, i:i+1])
+def print_data(name, X, y, header=False):
+    y_pred = ols_model_eval(X, y)
+    if header:
+        print("features\t\tr2\t\t\tr2_d\t\t\tmse\t\t\tsse\t\t\tcp")
+    r_square = r2_score(y, y_pred)
+    r2_d = cal_adjusetd_r_squared(X, y, y_pred)
+    mse = mean_squared_error(y, y_pred)
+    sse = np.sum((y - y_pred)**2)
+    cp = cal_cp(X, y, y_pred)
     
-
-    res_table = dict
-    for i in range(len(Xs)):
-        for j in range(len(Xs)):
-            pass
-
-    
-    print(len(Xs))
-    # for i in X:
-    #     print(i[0])
-
+    string_res = f"{name}\t\t{r_square}\t{r2_d}\t{mse}\t{sse}\t{cp}"
+    print(string_res)
 
 
 data = np.loadtxt('/home/behdad/Desktop/workspace/regression_2/regression_2/CaliforniaHousing/cal_housing.data', delimiter=',')
@@ -231,50 +202,53 @@ std_data = scaler.fit_transform(clean_data)
 X = std_data[:, :-1]  # Features (all columns except the last one)
 y = std_data[:, -1]   # Target (last column)
 
-# print(X)
-print("*&*&*&**&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&")
-print(data[:, -1])
 
-# x1 = X[:, 0:1]
-# x2 = X[:, 1:2]
-# x3 = X[:, 2:3]
-# # x4 = X[:, 3:4]
+x1 = X[:, 0:1]
+x2 = X[:, 1:2]
+x3 = X[:, 2:3]
+# x4 = X[:, 3:4]
 
-# X = np.concatenate((x1, x2, x3), axis=1)
-
-# X1 = x1
-# X2 = x2
-# X3 = x3
-# X1_X2 = np.concatenate((x1, x2), axis=1)
-# X1_X3 = np.concatenate((x1, x3), axis=1)
-# X2_X3 = np.concatenate((x2, x3), axis=1)
-# X1_X2_X3 = np.concatenate((x1, x2, x3), axis=1)
+X = np.concatenate((x1, x2, x3), axis=1)
 
 
-# forward_selection_res = forward_selection(X, y)
-# print("forward selection result:")
-# print(forward_selection_res)
+# Fit the linear model
+model = sm.OLS(y, X).fit()
 
-
-# backward_elimination_res = backward_elimination(X, y)
-# print("backward elimination result:")
-# print(backward_elimination_res)
-
-
-# x1_y_pred, x1_mse  = ols_model_eval(X1, y)
-# x2_y_pred, x2_mse = ols_model_eval(X2, y)
-# x3_y_pred, x3_mse = ols_model_eval(X3, y)
-# x1x2_y_pred, x1x2_mse = ols_model_eval(X1_X2, y)
-# x1x3_y_pred, x1x3_mse = ols_model_eval(X1_X3, y)
-# x2x3_y_pred, x2x3_mse = ols_model_eval(X2_X3, y)
-# x1x2x3_pred, x1x2x3_mse = ols_model_eval(X1_X2_X3, y)
+# Get the variance-covariance matrix
+vcov_matrix = model.cov_params()
+print("Variance-Covariance Matrix:\n", vcov_matrix)
 
 
 
 
-# # y_pred, b_hat, mse = ols_model_eval(X, y)
-# # print(y_pred)
-# # print(b_hat)
-# # print(mse)  
+# Calculate the correlation matrix
+correlation_matrix = np.corrcoef(X, rowvar=False)
+print("Correlation matrix:\n", correlation_matrix)
 
-# # var_combo_result(X, y)
+# Optionally, round the correlation matrix for better readability
+rounded_correlation_matrix = np.round(correlation_matrix, 3)
+print("Rounded correlation matrix:\n", rounded_correlation_matrix)
+
+
+X1 = x1
+X2 = x2
+X3 = x3
+X1_X2 = np.concatenate((x1, x2), axis=1)
+X1_X3 = np.concatenate((x1, x3), axis=1)
+X2_X3 = np.concatenate((x2, x3), axis=1)
+X1_X2_X3 = np.concatenate((x1, x2, x3), axis=1)
+
+print_data('x1', X1, y, True)
+print_data('x2', X2, y)
+print_data('x3', X3, y)
+print_data('x1x2', X1_X2, y)
+print_data('x1x3', X1_X3, y)
+print_data('x2x3', X2_X3, y)
+print_data('x1x2x3', X1_X2_X3, y)
+
+
+print("\nForward selection:")
+print(forward_selection(X, y))
+print("\nBackward elimination:")
+print(backward_elimination(X, y))
+

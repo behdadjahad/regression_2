@@ -38,7 +38,7 @@ y = std_data[:, -1]   # Target (last column)
 
 
 # Load the CSV file
-# Z = pd.read_csv("C:/proghe/New folder/p.csv")
+# Z = pdx.read_csv("C:/proghe/New folder/p.csv")
 
 # Extract the relevant columns
 y = y.iloc[:1000, 1]
