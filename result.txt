@@ -1,0 +1,79 @@
+                                 OLS Regression Results                                
+=======================================================================================
+Dep. Variable:                      y   R-squared (uncentered):                   0.243
+Model:                            OLS   Adj. R-squared (uncentered):              0.243
+Method:                 Least Squares   F-statistic:                              2204.
+Date:                Sun, 26 May 2024   Prob (F-statistic):                        0.00
+Time:                        11:09:45   Log-Likelihood:                         -26419.
+No. Observations:               20640   AIC:                                  5.284e+04
+Df Residuals:                   20637   BIC:                                  5.287e+04
+Df Model:                           3                                                  
+Covariance Type:            nonrobust                                                  
+==============================================================================
+                 coef    std err          t      P>|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+x1            -1.2463      0.016    -75.706      0.000      -1.279      -1.214
+x2            -1.2964      0.016    -79.209      0.000      -1.328      -1.264
+x3            -0.0147      0.006     -2.351      0.019      -0.027      -0.002
+==============================================================================
+Omnibus:                     2601.033   Durbin-Watson:                   0.406
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):             3709.068
+Skew:                           0.979   Prob(JB):                         0.00
+Kurtosis:                       3.689   Cond. No.                         5.24
+==============================================================================
+
+Notes:
+[1] R² is computed without centering (uncentered) since the model does not contain a constant.
+[2] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+Correlation matrix:
+ [[ 1.    -0.925 -0.108]
+ [-0.925  1.     0.011]
+ [-0.108  0.011  1.   ]]
+VIF:
+ [7.38460994 7.29907277 1.07087025]
+Eigenvalues:
+ [39883.22800126  1450.00267281 20586.76932593]
+Condition Number: 27.505623781995887
+Durbin-Watson statistic: 0.4057553401431604
+LinearRegression()
+Best lambda: 0.0001
+ridge model r2 score:
+0.24262250156071763
+ridge model 2r adjusted score:
+0.24251239628375898
+ridge model mse:
+0.7573774984392913
+ridge model cp:
+0.7575977089932084
+****************************
+ols model r2 score:
+0.24262250156071863
+ols model 2r adjusted score:
+0.2425123962837601
+ols model mse:
+0.7573774984392901
+ols model cp:
+0.7575977089932074
+ridge p_values:
+[0.9999999997520956, 0.0, 0.0, 0.01873562680021368]
+****************
+Best alpha: 0.0001777275273019905
+lasso model r2 score:
+0.24262147252241895
+lasso model 2r adjusted score:
+0.24251136709586185
+lasso model mse:
+0.7573785274775899
+lasso model cp:
+0.7575987383307041
+*******************
+pcr model r2 score:
+0.24262250156071863
+pcr model 2r adjusted score:
+0.2425123962837601
+pcr model mse:
+0.7573774984392901
+pcr model cp:
+0.7575977089932074
+*******************
+rho: 1.8347368965711607e-06

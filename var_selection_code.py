@@ -125,7 +125,6 @@ def forward_selection(X, y):
         
     return selected_features
 
-
 def backward_elimination(X, y, significance_level=0.05):
     """
     Perform backward elimination for feature selection in multiple linear regression.
@@ -206,6 +205,11 @@ y = std_data[:, -1]   # Target (last column)
 x1 = X[:, 0:1]
 x2 = X[:, 1:2]
 x3 = X[:, 2:3]
+x4 = X[:, 3:4]
+x5 = X[:, 4:5]
+x6 = X[:, 5:6]
+x7 = X[:, 6:7]
+x8 = X[:, 7:8]
 # x4 = X[:, 3:4]
 
 X = np.concatenate((x1, x2, x3), axis=1)
@@ -246,6 +250,8 @@ print_data('x1x3', X1_X3, y)
 print_data('x2x3', X2_X3, y)
 print_data('x1x2x3', X1_X2_X3, y)
 
+
+X = np.concatenate((x1, x2, x3, x4, x5, x6, x7, x8), axis=1)
 
 print("\nForward selection:")
 print(forward_selection(X, y))
